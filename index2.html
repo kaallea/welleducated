@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html> <!-- sorry for being your big big fan ig idk. but it kinda makes me sad to know that u ghosted me. idk what's wrong with you, but, i guess i'll wait for you ;)) -->
 <head>
     <title>confession</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
-    <link rel="icon" href="https://i.pinimg.com/originals/cf/a5/f8/cfa5f82d117e804a9e59dc7782b155b3.png" type="image/x-icon"> <!-- ganti dengan link favicon yang valid -->
-    <!-- sorry for being your big big fan ig idk. but it kinda makes me sad to know that u ghosted me. idk what's wrong with you, but, i guess i'll wait for you ;)) -->
+    <link rel="icon" href="https://i.pinimg.com/originals/cf/a5/f8/cfa5f82d117e804a9e59dc7782b155b3.png" type="image/x-icon">
     <style>
         body {
             height: 600vh;
@@ -76,7 +75,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://i.pinimg.com/736x/25/6d/3e/256d3e35dd24eb85dfa1c97787b753cf.jpg');
+            background-image: url('https://i.pinimg.com/736x/5f/f5/75/5ff575d11df246be6101ae208ee769be.jpg');
             background-size: cover; 
             filter: blur(5px); 
             z-index: -1; 
@@ -87,7 +86,49 @@
             font-family: 'Poppins', sans-serif; 
             font-size: 24px; 
             margin-top: 20px;
+            opacity: 0;
+            position: relative;
+            animation: slideDownFadeIn 2s forwards;
+            white-space: pre-wrap;
         }
+
+        @keyframes slideDownFadeIn {
+            0% {
+                top: -50px;
+                opacity: 0;
+            }
+            100% {
+                top: 0;
+                opacity: 1;
+            }
+        }
+        
+#confetti-container {
+            pointer-events: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            overflow: visible;
+            z-index: 9999;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            opacity: 0.8;
+            animation: fall 3s linear forwards;
+            border-radius: 3px;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
     </style>
 </head>
 <body>
@@ -101,26 +142,72 @@
     </div>
     <div id="greetingDiv"></div>
     <button id="nextBtn">next</button>
-    <script>
+    <div id="confetti-container"></div>
+    
+   <script>
         function showGreeting(event) {
             event.preventDefault(); 
-            const name = document.getElementById('name').value;
+            const name = document.getElementById('name').value.trim();
+            if(!name) return;
+
             const greetingDiv = document.getElementById('greetingDiv');
-            greetingDiv.innerText = `Ayy-!!, ${name}! it's youu :3. How are youu??? It's been a long time since we haven't talk to each other (well I said it earlier on the sendthesong but i wanted to impress you with my html B-)), so, yeah :D).
-            To be honest, I've never make any html like this, so, yeah i guess this is my first time. Anyway, you'll be graduating soon :0
-            6 years in thurs must be tiring, but u did great. I'm happy to know you. I don't really know what to say but, semangat khidmat nya. Klo duduk jangan bungkuk" ya ${name}. Take caree.`;  
+            greetingDiv.style.opacity = 0;
+            greetingDiv.style.animation = 'none';
+            void greetingDiv.offsetWidth; 
+            greetingDiv.style.animation = 'slideDownFadeIn 2s forwards';
+
+            greetingDiv.innerText = `Ayy-!!, ${name}! it's youu :3. How are youu??? It's been a long time since we haven't talk each other (well I said it earlier on the sendthesong but i wanted to impress you with my html, so, yeah :D). To be honest, I've never make any html like this, so, yeah i guess this is my first time. Anyway, you'll be graduating soon :0
+6 years in thurs must be tiring, but u did great. Semangat khidmat nya. Klo duduk jangan bungkuk" ya ${name}. Take caree.`;  
             document.getElementById('name').value = '';  
+
             const nextBtn = document.getElementById('nextBtn');
             nextBtn.style.display = 'inline-block';
 
             nextBtn.onclick = function() {
                 window.location.href = 'https://youtu.be/EM1t8H_PE78?si=a6JAxoY_fUW5vRaK';
             };
-            alert("pls comeback ;)");
+
+            alert("don't hang me up to dry");
+
+            launchConfetti();
+        }
+
+        function launchConfetti() {
+            const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4caf50', '#8bc34a', '#cddc39', '#ffeb3b', '#ffc107', '#ff9800', '#ff5722'];
+            const confettiContainer = document.getElementById('confetti-container');
+
+            for(let i=0; i<100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * window.innerWidth + 'px';
+                confetti.style.top = '-10px';
+                confetti.style.width = (5 + Math.random() * 10) + 'px';
+                confetti.style.height = confetti.style.width;
+                confetti.style.animationDuration = (2 + Math.random() * 3) + 's';
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+                confettiContainer.appendChild(confetti);
+
+    
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
         }
     </script>
     <div class="background"></div>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+<script>
+  window.onload = () => {
+    confetti({
+      particleCount: 150,
+      spread: 70,
+      origin: { y: 0.6 }
+    });
+  };
+</script>
 </body>
 </html>
+
 
 
